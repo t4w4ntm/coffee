@@ -1,0 +1,117 @@
+/* ---- Import Google Font (Kanit) ---- */
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap');
+
+* {
+    font-family: 'Kanit', sans-serif;
+}
+
+body {
+    font-family: 'Kanit', sans-serif;
+    background-color: #f7f8f4; /* เปลี่ยนเป็นสีเขียวอ่อน */
+    padding: 0 20px 1rem 20px; /* ไม่มี padding-top เพื่อให้ navbar.css จัดการ */
+    margin: 0;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    font-weight: 700;
+    font-family: 'Kanit', sans-serif;
+    margin-bottom: 40px; /* เพิ่มระยะห่างด้านล่าง */
+}
+
+/* ---- Card Styles ---- */
+.card {
+    border: none; /* เอาเส้นขอบออก */
+    border-radius: 12px; /* ทำให้ขอบมนขึ้น */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* เพิ่มเงาให้ดูมีมิติ */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    margin-bottom: 20px;
+    background-color: #ffffff; /* กำหนดพื้นหลังสีขาว */
+}
+
+.card:hover {
+    transform: translateY(-5px); /* ทำให้การ์ดลอยขึ้นเมื่อชี้ */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.card-header {
+    background-color: #4a3929; /* สีน้ำตาลเข้ม */
+    color: white;
+    font-weight: 700;
+    font-family: 'Kanit', sans-serif;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.card-body {
+    background-color: #ffffff; /* กำหนดพื้นหลังสีขาว */
+    color: #333; /* กำหนดสีข้อความเป็นสีเข้ม */
+}
+
+.list-group-item {
+    padding: 0.75rem 0; /* ปรับระยะห่างแนวตั้ง */
+    border: none; /* เอาเส้นคั่นออก */
+    border-bottom: 1px solid #eee; /* เพิ่มเส้นคั่นบางๆ แทน */
+    background-color: transparent; /* ไม่มีพื้นหลัง */
+    color: #333; /* กำหนดสีข้อความเป็นสีเข้ม */
+}
+
+.list-group-item:last-child {
+    border-bottom: none;
+}
+
+.card-text {
+    color: #333; /* กำหนดสีข้อความเป็นสีเข้ม */
+}
+
+/* ---- Image Styles ---- */
+.card-img-container {
+    display: flex;
+    flex-direction: column; /* ให้เรียงแนวตั้งภาพละบรรทัด */
+    gap: 10px;
+}
+
+.card-img-wrapper {
+    flex: 1 1 100%;
+    max-width: 100%;
+}
+
+.card-img-top {
+    width: 100%;
+    height: auto; /* ให้ภาพสูงตามสัดส่วน */
+    object-fit: contain; /* แสดงเต็มกว้างโดยไม่ตัดภาพ */
+    border-radius: 8px;
+    cursor: pointer;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.card-img-top:hover {
+    opacity: 0.85; /* ทำให้รูปโปร่งใสเล็กน้อยเมื่อชี้ */
+}
+
+/* ---- Back Button ---- */
+.btn-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    font-family: 'Kanit', sans-serif;
+    color: #5a4a37;
+    text-decoration: none;
+    margin-bottom: 2rem;
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    background: #ffffff;
+    border: 1px solid #d4c5a0;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.btn-back:hover {
+    color: #22c55e;
+    background: #f3f4f0;
+    transform: translateX(-4px);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+}

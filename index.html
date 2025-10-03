@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ฟอร์มบันทึกข้อมูลนักวิจัยพื้นที่</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="navbar.css">
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAPd8UeMjK_euJp_jasQCPFmQQHicmH-c4&callback=initMap&libraries=&v=weekly" defer></script>
+  
+  <!-- ซ่อนทะเบียนเกษตรกรทันทีถ้าอยู่ในช่วงวันที่ที่ต้องซ่อน -->
+  <script>
+    (function() {
+      function getCurrentDate() {
+        const params = new URLSearchParams(location.search);
+        let now;
+        if (params.has('testDate')) {
+          now = new Date(params.get('testDate') + 'T00:00:00');
+        } else if (window.__debugDate) {
+          now = new Date(window.__debugDate + 'T00:00:00');
+        } else {
+          now = new Date();
+        }
+        return now;
+      }
+      
+      function shouldHideFarmerSection() {
+        const now = getCurrentDate();
+        const year = now.getFullYear();
+        const month = now.getMonth() + 1;
+        return (year > 2025) || (year === 2025 && month >= 11);
+      }
+      
+      function shouldShowBeanYieldSection() {
+        const now = getCurrentDate();
+        const year = now.getFullYear();
+        const month = now.getMonth() + 1;
+        return (year > 2025) || (year === 2025 && month >= 12);
+      }
+      
+      if (shouldHideFarmerSection()) {
+        const style = document.createElement('style');
+        style.innerHTML = '#farmer_section { display: none !important; }';
+        document.head.appendChild(style);
+      }
+      
+      if (shouldShowBeanYieldSection()) {
+        const style = document.createElement('style');
+        style.innerHTML = '#bean_yield_section { display: block !important; }';
+        document.head.appendChild(style);
+      }
+    })();
+  </script>
+</head>
+
+<body>
+  <h2>ฟอร์มบันทึกข้อมูลนักวิจัยพื้นที่</h2>
+
+  <form id="soilForm">
+
+    <fieldset>
+      <legend>ข้อมูลแปลง</legend>
+      <label>ดอย
+        <select id="mountain" required>
+          <option value="" disabled selected>-- โปรดเลือกดอย --</option>
+          <option value="ดอยช้าง">ดอยช้าง</option>
+          <option value="ดอยแม่สลอง">ดอยแม่สลอง</option>
+        </select>
+      </label>
+      <label>แปลงหมายเลขที่
+        <select id="plot_number" required disabled>
+          <option value="" disabled selected>-- โปรดเลือกดอยก่อน --</option>
+        </select>
+      </label>
+      <label>ต้นกาแฟที่
+        <select id="coffee_tree" required disabled>
+          <option value="" disabled selected>-- โปรดเลือกดอยและแปลงก่อน --</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+        </select>
+      </label>
+    </fieldset>
+
+    <fieldset id="farmer_section">
+      <legend>ทะเบียนเกษตรกร</legend>
+      <label>ชื่อ นามสกุล
+        <input type="text" id="farmer_name" required>
+      </label>
+      <label>อายุ (ปี)
+        <input type="number" id="age" min="0" step="1" required>
+      </label>
+      <label>ประสบการณ์การปลูกกาแฟ (ปี)
+        <input type="number" id="coffee_experience" min="0" step="1" required>
+      </label>
+      <label>จำนวนพื้นที่เพาะปลูก (ไร่)
+        <input type="number" id="planting_area" min="0" step="0.01" required>
+      </label>
+      <label>ที่อยู่ (บ้านเลขที่ ตำบล อำเภอ จังหวัด รหัสไปรษณีย์)
+        <input type="text" id="address" required>
+      </label>
+      <label>พิกัด GPS
+        <div class="gps-input-group">
+          <input type="text" id="gps_coordinates" required placeholder="คลิกปุ่มเพื่อเลือกจากแผนที่">
+          <button type="button" id="mapBtn">เลือกจากแผนที่</button>
+        </div>
+      </label>
+      <label>ระบบน้ำที่ใช้
+        <select id="water_system" required>
+          <option value="" disabled selected>-- เลือกระบบน้ำ --</option>
+          <option value="น้ำฝน">น้ำฝน</option>
+          <option value="น้ำบาดาล">น้ำบาดาล</option>
+          <option value="บ่อน้ำธรรมชาติ">บ่อน้ำธรรมชาติ</option>
+          <option value="อื่นๆ">อื่นๆ</option>
+        </select>
+      </label>
+      <label>ชนิดของปุ๋ยที่ใส่
+        <select id="fertilizer_type" required>
+          <option value="" disabled selected>-- เลือกชนิดของปุ๋ย --</option>
+          <option value="ปุ๋ยเคมี">ปุ๋ยเคมี</option>
+          <option value="ปุ๋ยอินทรีย์">ปุ๋ยอินทรีย์</option>
+          <option value="ปุ๋ยคอกปุ๋ยหมัก">ปุ๋ยคอกปุ๋ยหมัก</option>
+          <option value="ไม่ได้ใส่ปุ๋ย">ไม่ได้ใส่ปุ๋ย</option>
+        </select>
+      </label>
+      <label>เบอร์ปุ๋ยที่ใส่ (เช่น 15-15-15)
+        <input type="text" id="fertilizer_formula" placeholder="xx-xx-xx" maxlength="8" required>
+      </label>
+      <label>จำนวนของปุ๋ยที่ใส่/ปี (ครั้ง/ปี)
+        <input type="number" id="fertilizer_frequency" min="0" step="1" required>
+      </label>
+      <label>ปริมาณปุ๋ยที่ใส่/ครั้ง/ต้น (kg)
+        <input type="number" step="0.1" id="fertilizer_amount" min="0" required>
+      </label>
+      <label>ปัญหาดิน
+        <textarea id="soil_problems" rows="3"></textarea>
+      </label>
+      <label>ปัญหาผลผลิต
+        <textarea id="yield_problems" rows="3"></textarea>
+      </label>
+      <label>ปัญหาการเข้าถึงสัญญาณอินเตอร์เน็ต
+        <select id="internet_access" required>
+          <option value="" disabled selected>-- เลือกสถานะ --</option>
+          <option value="มีสัญญาณอินเตอร์เน็ต">มีสัญญาณอินเตอร์เน็ต</option>
+          <option value="ไม่มีสัญญาณอินเตอร์เน็ต">ไม่มีสัญญาณอินเตอร์เน็ต</option>
+        </select>
+      </label>
+      <label>ผลผลิตกาแฟต่อต้น (Kg)
+        <input type="number" step="0.1" id="yield_per_tree" min="0" required>
+      </label>
+      <label>ประสบการณ์ส่งแข่งขัน Cupping Score
+        <select id="cupping_experience" required>
+          <option value="" disabled selected>-- เลือกประสบการณ์ --</option>
+          <option value="เคยประกวด">เคยประกวด</option>
+          <option value="ไม่เคยประกวด">ไม่เคยประกวด</option>
+        </select>
+      </label>
+      <label>ต้นทุนการผลิตปุ๋ย/ไร่/ปี (บาท)
+        <input type="number" id="fertilizer_cost" required>
+      </label>
+      <label>ต้นทุนค่าแรง/ไร่/ปี (บาท)
+        <input type="number" id="labor_cost" required>
+      </label>
+      <label>ต้นทุนค่าใช้จ่ายอื่นๆ/ไร่/ปี (บาท)
+        <input type="number" id="other_costs" required>
+      </label>
+    </fieldset>
+
+    <fieldset>
+      <legend>วัดค่าดิน ด้วยเครื่องวัดดินแบบพกพา</legend>
+      <div class="grid-container">
+        <label data-order="1">วัดค่า N (mg/kg) <input type="number" step="0.1" id="n_portable" required></label>
+        <label data-order="2">วัดค่า P (mg/kg) <input type="number" step="0.1" id="p_portable" required></label>
+        <label data-order="3">วัดค่า K (mg/kg) <input type="number" step="0.1" id="k_portable" required></label>
+        <label data-order="4">วัดค่า EC (mS/cm) <input type="number" step="0.1" id="ec_portable" required></label>
+        <label data-order="5">วัดค่า pH (pH Unit) <input type="number" step="0.1" id="ph_portable" required></label>
+        <label data-order="6">วัดค่า OM (% w/w) <input type="number" step="0.1" id="om_portable" required></label>
+        <label data-order="7">วัดค่า Moisture (%) <input type="number" step="0.1" id="moisture_portable" required></label>
+        <label data-order="8">วัดค่า Temp (°C) <input type="number" step="0.1" id="temp_portable" required></label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>ติดตามการเจริญเติบโตต้นกาแฟ</legend>
+      <label>ความสูงต้นกาแฟจากพื้นดิน ถึง ยอดต้น (ซม)
+        <input type="number" step="0.1" id="coffee_height" min="0" required>
+      </label>
+      <label>เส้นรอบวงของต้นกาแฟ ณ ที่จุด 15 ซม สูงจากพื้นดิน (ซม)
+        <input type="number" step="0.1" id="coffee_circumference" min="0" required>
+      </label>
+      <label>ติดตามการออกดอก
+        <select id="flowering" required>
+          <option value="" disabled selected>-- เลือกการออกดอก --</option>
+          <option value="มีปกติ">มีปกติ</option>
+          <option value="มีน้อยกว่าปกติ">มีน้อยกว่าปกติ</option>
+          <option value="มีมากกว่าปกติ">มีมากกว่าปกติ</option>
+          <option value="ไม่มีเลย">ไม่มีเลย</option>
+        </select>
+      </label>
+      <label>ติดตามการออกผล
+        <select id="fruiting" required>
+          <option value="" disabled selected>-- เลือกการออกผล --</option>
+          <option value="มีปกติ">มีปกติ</option>
+          <option value="มีน้อยกว่าปกติ">มีน้อยกว่าปกติ</option>
+          <option value="มีมากกว่าปกติ">มีมากกว่าปกติ</option>
+          <option value="ไม่มีเลย">ไม่มีเลย</option>
+        </select>
+      </label>
+      <label>มีปัญหาโรคพืชหรือไม่
+        <select id="disease_problem" required>
+          <option value="" disabled selected>-- เลือกปัญหา --</option>
+          <option value="มีปกติ">มีปกติ</option>
+          <option value="มีน้อยกว่าปกติ">มีน้อยกว่าปกติ</option>
+          <option value="มีมากกว่าปกติ">มีมากกว่าปกติ</option>
+          <option value="ไม่มีเลย">ไม่มีเลย</option>
+        </select>
+      </label>
+      <label>มีปัญหาแมลงพืชหรือไม่
+        <select id="insect_problem" required>
+          <option value="" disabled selected>-- เลือกปัญหา --</option>
+          <option value="มีปกติ">มีปกติ</option>
+          <option value="มีน้อยกว่าปกติ">มีน้อยกว่าปกติ</option>
+          <option value="มีมากกว่าปกติ">มีมากกว่าปกติ</option>
+          <option value="ไม่มีเลย">ไม่มีเลย</option>
+        </select>
+      </label>
+      <label>มีปัญหาหนอนพืชหรือไม่
+        <select id="worm_problem" required>
+          <option value="" disabled selected>-- เลือกปัญหา --</option>
+          <option value="มีปกติ">มีปกติ</option>
+          <option value="มีน้อยกว่าปกติ">มีน้อยกว่าปกติ</option>
+          <option value="มีมากกว่าปกติ">มีมากกว่าปกติ</option>
+          <option value="ไม่มีเลย">ไม่มีเลย</option>
+        </select>
+      </label>
+    </fieldset>
+
+    <fieldset id="bean_yield_section" style="display: none;">
+      <legend>ผลผลิตเมล็ดกาแฟ</legend>
+      <label>น้ำหนักผลสด (กรัม)
+        <input type="number" id="fresh_weight" min="0" step="1" required>
+      </label>
+      <label>น้ำหนักผลแห้ง (กะลา) (กรัม)
+        <input type="number" id="dry_weight" min="0" step="1" required>
+      </label>
+      <label>คุณภาพเมล็ด
+        <select id="bean_quality" required>
+          <option value="" disabled selected>-- เลือกคุณภาพเมล็ด --</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+        </select>
+      </label>
+    </fieldset>
+
+    <fieldset>
+      <legend>แนบรูปภาพเพิ่มเติม</legend>
+      <div id="fileInputs"></div>
+      <button type="button" id="addFileBtn">+ เพิ่มไฟล์</button>
+    </fieldset>
+
+    <button type="submit" class="btn-save">บันทึกข้อมูล</button>
+  </form>
+
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+
+ <div id="mapModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn">&times;</span>
+    <h3>เลือกตำแหน่งจากแผนที่</h3>
+    <div id="map"></div>
+    <div class="map-controls">
+      <button type="button" id="locateMeBtn" class="btn-secondary">📍 ปักหมุดที่ตำแหน่งปัจจุบัน</button>
+      <button type="button" id="confirmLocationBtn" class="btn-confirm">ยืนยันตำแหน่ง</button>
+    </div>
+  </div>
+</div>
+
+  <script src="navbar.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>

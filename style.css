@@ -1,0 +1,572 @@
+/* ---- Import Google Font (Kanit) ---- */
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary-color: #22c55e;
+    --primary-dark: #16a34a;
+    --secondary-color: #a3a3a3;
+    --accent-color: #84cc16;
+    --success-color: #10b981;
+    --danger-color: #ef4444;
+    --warning-color: #f59e0b;
+    --light-bg: #f7f8f4;
+    --white: #ffffff;
+    --gray-100: #f3f4f0;
+    --gray-200: #d4c5a0;
+    --gray-300: #b8a082;
+    --gray-400: #8b7355;
+    --gray-500: #6b5b47;
+    --gray-600: #5a4a37;
+    --gray-700: #4a3929;
+    --gray-800: #3a281c;
+    --gray-900: #2a1810;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --border-radius: 12px;
+    --border-radius-lg: 16px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Kanit', sans-serif;
+}
+
+body {
+    font-family: 'Kanit', sans-serif;
+    background: linear-gradient(135deg, var(--light-bg) 0%, var(--gray-100) 100%);
+    min-height: 100vh;
+    color: var(--gray-800);
+    line-height: 1.6;
+    padding: 0 1rem 1rem 1rem; /* ไม่มี padding-top เพื่อให้ navbar.css จัดการ */
+    margin: 0;
+}
+
+h2 {
+    text-align: center;
+    color: var(--gray-900);
+    font-weight: 700;
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    margin-bottom: 1.5rem; /* ลด margin */
+    margin-top: 3.5rem; /* เพิ่ม margin-top เพื่อให้ห่างจาก navbar */
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+form {
+    max-width: 900px;
+    margin: 0 auto;
+    background: var(--white);
+    padding: 2.5rem;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--gray-200);
+    position: relative;
+    overflow: hidden;
+}
+
+form::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+}
+
+label {
+    display: block;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    color: var(--gray-700);
+    font-size: 1rem;
+}
+
+/* ฟิลด์ที่ล็อคไม่ให้แก้ไข */
+.locked-field input,
+.locked-field select,
+.locked-field textarea {
+    background: #e9ecef !important;
+    color: #606060 !important;
+    cursor: not-allowed !important;
+    border-color: #ced4da !important;
+}
+
+.locked-field input:focus,
+.locked-field select:focus,
+.locked-field textarea:focus {
+    box-shadow: none !important;
+    border-color: #ced4da !important;
+    transform: none !important;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    margin-top: 0.5rem;
+    border: 2px solid var(--gray-200);
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    transition: var(--transition);
+    background: var(--white);
+    color: var(--gray-800);
+}
+
+/* ซ่อนลูกศรของ input number */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+input[type="number"]:focus {
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+/* ปรับขนาด file input ให้เท่ากับปุ่มลบ */
+input[type="file"] {
+    padding: 0.5rem 1rem;
+    height: auto;
+    margin-top: 0;
+    vertical-align: middle;
+    border: 2px solid var(--gray-200);
+    border-radius: var(--border-radius);
+    background: var(--white);
+    font-family: 'Kanit', sans-serif;
+}
+
+select {
+    padding-right: 2.5rem;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1rem;
+    appearance: none;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+    transform: translateY(-2px);
+}
+
+input:hover,
+select:hover,
+textarea:hover {
+    border-color: var(--gray-300);
+}
+
+fieldset {
+    border: 2px solid var(--gray-200);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.02), rgba(249, 250, 251, 0.8));
+    transition: var(--transition);
+}
+
+fieldset:hover {
+    border-color: var(--primary-color);
+}
+
+legend {
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    background: var(--white);
+    border-radius: var(--border-radius);
+    border: 2px solid var(--primary-color);
+    font-size: 1.1rem;
+}
+
+.btn-save {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: var(--white);
+    padding: 1.25rem 2.5rem;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 1.1rem;
+    font-weight: 600;
+    font-family: 'Kanit', sans-serif;
+    cursor: pointer;
+    display: block;
+    width: 100%;
+    margin-top: 2rem;
+    transition: var(--transition);
+    box-shadow: var(--shadow-md);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-save:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn-save:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: var(--gray-400);
+}
+
+#addFileBtn {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: var(--white);
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: var(--border-radius);
+    margin: 0.5rem auto 0;
+    cursor: pointer;
+    font-weight: 500;
+    font-family: 'Kanit', sans-serif;
+    transition: var(--transition);
+    box-shadow: var(--shadow);
+    display: block;
+    width: fit-content;
+}
+
+#addFileBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.file-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 10px;
+    padding: 1rem;
+    background: var(--gray-100);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--gray-200);
+}
+
+.file-container {
+    flex: 1;
+    min-width: 0;
+}
+
+.file-label {
+    margin-top: 5px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    min-height: 20px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    text-align: center;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    word-break: break-all;
+}
+
+.file-label.select-button {
+    border-radius: var(--border-radius);
+    background: rgba(28, 180, 84, 0.8);
+    color: white;
+}
+
+.file-label.select-button:hover {
+    background: rgba(19, 128, 59, 0.8);
+}
+
+.file-label.selected {
+    background: #f0f0f0;
+    border: 1px solid #ddd;
+    color: #333;
+}
+
+.file-label.selected:hover {
+    background: #e0e0e0;
+}
+
+.file-preview-container {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-preview {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-preview img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.remove-btn {
+    background: var(--danger-color);
+    color: var(--white);
+    border: none;
+    padding: 8px 12px;
+    margin-top: 5px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-weight: 500;
+    font-family: 'Kanit', sans-serif;
+    transition: var(--transition);
+    height: fit-content;
+    flex-shrink: 0;
+    font-size: 14px;
+}
+
+.remove-btn:hover {
+    background: #da190b;
+}
+
+.btn-back {
+    display: none;
+}
+
+.btn-back:hover {
+    display: none;
+}
+
+/* --- Styles for new features --- */
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+/* จัดเรียงลำดับตาม data-order สำหรับ 2 คอลัมน์ */
+.grid-container label[data-order="1"] { order: 1; }  /* N - คอลัมน์ 1 */
+.grid-container label[data-order="2"] { order: 3; }  /* P - คอลัมน์ 1 */
+.grid-container label[data-order="3"] { order: 5; }  /* K - คอลัมน์ 1 */
+.grid-container label[data-order="4"] { order: 7; }  /* EC - คอลัมน์ 1 */
+.grid-container label[data-order="5"] { order: 2; }  /* pH - คอลัมน์ 2 */
+.grid-container label[data-order="6"] { order: 4; }  /* OM - คอลัมน์ 2 */
+.grid-container label[data-order="7"] { order: 6; }  /* Moisture - คอลัมน์ 2 */
+.grid-container label[data-order="8"] { order: 8; }  /* Temp - คอลัมน์ 2 */
+
+
+
+.gps-input-group {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.gps-input-group input {
+    flex-grow: 1;
+}
+
+#mapBtn {
+    padding: 0.8rem 1rem; /* Adjusted padding to match input height */
+    margin-top: 0.5rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: var(--transition);
+    font-size: 1rem;
+    font-family: 'Kanit', sans-serif;
+    font-weight: 600;
+}
+
+#mapBtn:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 2000; 
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; 
+    background-color: rgba(0,0,0,0.6);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 800px;
+    border-radius: var(--border-radius-lg);
+    position: relative;
+    box-shadow: var(--shadow-lg);
+    font-family: 'Kanit', sans-serif;
+}
+
+.close-btn {
+    color: #aaa;
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    font-size: 35px;
+    font-weight: bold;
+    font-family: 'Kanit', sans-serif;
+    cursor: pointer;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: black;
+}
+
+#map {
+    height: 500px;
+    width: 100%;
+    margin-bottom: 15px;
+    border-radius: var(--border-radius);
+}
+
+/* --- Responsive Design --- */
+
+@media (max-width: 768px) {
+    body {
+        padding: 1rem 0.5rem;
+    }
+    form {
+        padding: 1.5rem;
+        margin: 0 0.5rem;
+    }
+    fieldset {
+        padding: 1rem;
+    }
+    .grid-container {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+    
+    /* จัดเรียงใหม่ในหน้าจอเล็ก: N P K EC pH OM Moisture Temp */
+    .grid-container label[data-order="1"] { order: 1; }  /* N */
+    .grid-container label[data-order="2"] { order: 2; }  /* P */
+    .grid-container label[data-order="3"] { order: 3; }  /* K */
+    .grid-container label[data-order="4"] { order: 4; }  /* EC */
+    .grid-container label[data-order="5"] { order: 5; }  /* pH */
+    .grid-container label[data-order="6"] { order: 6; }  /* OM */
+    .grid-container label[data-order="7"] { order: 7; }  /* Moisture */
+    .grid-container label[data-order="8"] { order: 8; }  /* Temp */
+    
+    .file-row {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    
+    .file-container {
+        width: 100%;
+    }
+    
+    .remove-btn {
+        align-self: flex-end;
+        margin-top: 0.5rem;
+    }
+    .modal-content {
+        width: 95%;
+        margin: 10% auto;
+    }
+}
+
+.btn-confirm {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: var(--white);
+    padding: 0.9rem 2rem;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: 'Kanit', sans-serif;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: var(--shadow-md);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.btn-confirm:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+}
+
+.map-controls {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+.btn-secondary {
+    background: var(--gray-400);
+    color: var(--white);
+    padding: 0.9rem 2rem;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: 'Kanit', sans-serif;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: var(--shadow-md);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.btn-secondary:hover {
+    background: var(--gray-500);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Responsive สำหรับปุ่มแผนที่ */
+@media (max-width: 600px) {
+    .map-controls {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    
+    .btn-confirm,
+    .btn-secondary {
+        width: 100%;
+        justify-content: center;
+    }
+}
+

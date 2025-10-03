@@ -1,0 +1,344 @@
+/* Body adjustment for fixed navbar */
+body {
+    padding-top: 80px; /* เพิ่ม padding ด้านบนเพื่อไม่ให้เนื้อหาซ้อนกับ navbar */
+}
+
+/* ---- Navbar Styles ---- */
+.navbar {
+    background: rgba(34, 197, 94, 0.8);
+    /* backdrop-filter: blur(1px);
+    -webkit-backdrop-filter: blur(1px); */
+    padding: 1rem 0;
+    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 1000;
+    margin: 0;
+}
+
+.navbar-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+}
+
+.navbar-brand {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: white;
+    text-decoration: none;
+    margin-right: auto;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    pointer-events: none;
+    cursor: default;
+    margin-left: 0;
+}
+
+.navbar-menu {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-left: auto;
+}
+
+.navbar-link {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    position: relative;
+    white-space: nowrap;
+}
+
+.navbar-link:hover {
+    color: white;
+    text-decoration: none;
+    transform: translateY(-1px);
+}
+
+.navbar-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 50%;
+    background: white;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.navbar-link:hover::after {
+    width: 80%;
+}
+
+/* Export button - ไม่แสดงเส้นใต้ */
+.navbar-link.export-btn:hover::after {
+    display: none !important; /* ซ่อนเส้นใต้สำหรับปุ่ม export */
+    width: 0 !important;
+}
+
+.export-btn {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+.export-btn:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;
+}
+
+.export-btn:hover::after {
+    display: none !important; /* ซ่อนเส้นใต้สำหรับปุ่ม export */
+}
+
+/* Hamburger Menu Button */
+.navbar-toggle {
+    display: none;
+    flex-direction: column;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    margin-left: auto;
+    margin-right: 0;
+    transition: all 0.3s ease;
+}
+
+.navbar-toggle:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.navbar-toggle span {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 3px 0;
+    transition: 0.3s ease;
+    border-radius: 1px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    display: block;
+    position: relative;
+    transform-origin: center; /* ให้หมุนจากจุดกึ่งกลาง */
+}
+
+/* Hamburger Animation - ปรับให้ X สมมาตรและเท่ากัน */
+.navbar-toggle.active span:nth-child(1) {
+    transform: rotate(-45deg) translate(-6px, 6px);
+    height: 3px;
+}
+
+.navbar-toggle.active span:nth-child(2) {
+    opacity: 0;
+    transform: scale(0);
+    height: 3px;
+}
+
+.navbar-toggle.active span:nth-child(3) {
+    transform: rotate(45deg) translate(-6px, -6px);
+    height: 3px;
+}
+
+.navbar-nav {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    background: transparent;
+    flex-direction: row;
+    padding: 0;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    font-family: 'Kanit', sans-serif;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.nav-link:hover {
+    background: transparent;
+    color: white;
+    text-decoration: none;
+    transform: translateY(-1px);
+}
+
+.nav-link:hover::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 3px;
+    background: white;
+    border-radius: 1px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* Export button styling - แสดงเป็นกล่อง background แทนเส้นใต้ */
+.nav-link[onclick*="exportAllData"]:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 6px;
+}
+
+.nav-link[onclick*="exportAllData"]:hover::after {
+    display: none !important; /* ไม่แสดงเส้นใต้สำหรับปุ่ม export */
+}
+
+.nav-link.active {
+    background: transparent;
+    color: white;
+}
+
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 3px;
+    background: white;
+    border-radius: 1px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* ป้องกันการ click ระหว่าง transition */
+.navbar-toggle:disabled ~ .navbar-nav .nav-link {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+/* ป้องกันการ click เมื่อ menu กำลังเปิด/ปิด */
+.navbar.menu-transition .nav-link {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    body {
+        padding-top: 60px; /* ลด padding เพื่อให้เท่ากับหน้าอื่น */
+    }
+    
+    .navbar-toggle {
+        display: flex;
+    }
+    
+    .navbar-container {
+        justify-content: space-between !important;
+        padding: 0.5rem 1rem;
+        gap: 0;
+        max-width: none;
+        width: 100%;
+        align-items: center;
+    }
+    
+    .navbar-nav {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(34, 197, 94, 0.8);
+        flex-direction: column;
+        gap: 0;
+        padding: 1rem 0;
+        transform: translateY(-100%);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .navbar-nav.active {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    /* Change main navbar background when mobile menu is active */
+    .navbar.menu-open {
+        background: rgba(34, 197, 94, 0.8);
+    }
+    
+    .nav-link {
+        font-size: 1rem;
+        padding: 1rem 2rem;
+        width: 100%;
+        text-align: center;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .nav-link:last-child {
+        border-bottom: none;
+    }
+    
+    /* Responsive underlines */
+    .nav-link:hover::after,
+    .nav-link.active::after {
+        width: 30%;
+        height: 2px;
+        bottom: 0.5rem;
+        background: white;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding-top: 55px;
+    }
+    
+    .navbar-container {
+        padding: 0.5rem 1rem;
+        align-items: center;
+    }
+    
+    .navbar-brand {
+        font-size: 1.1rem;
+        margin-left: 0;
+        margin-right: auto;
+    }
+    
+    .navbar-toggle {
+        margin-left: auto;
+        margin-right: 0;
+    }
+    
+    .nav-link {
+        font-size: 0.95rem;
+        padding: 0.8rem 1.5rem;
+    }
+    
+    /* Smaller underlines for very small screens */
+    .nav-link:hover::after,
+    .nav-link.active::after {
+        width: 25%;
+        height: 2px;
+        background: white;
+    }
+}

@@ -1,0 +1,582 @@
+/* ---- Import Google Font (Kanit) ---- */
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap');
+
+:root{
+  --primary-color:#22c55e; --primary-dark:#16a34a; --secondary-color:#a3a3a3; --accent-color:#84cc16;
+  --success-color:#10b981; --danger-color:#ef4444; --warning-color:#f59e0b;
+  --light-bg:#f7f8f4; --white:#fff;
+  --gray-100:#f3f4f0; --gray-200:#d4c5a0; --gray-300:#b8a082; --gray-400:#8b7355; --gray-500:#6b5b47;
+  --gray-600:#5a4a37; --gray-700:#4a3929; --gray-800:#3a281c; --gray-900:#2a1810;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.05);
+  --shadow:0 1px 3px rgba(0,0,0,.1), 0 1px 2px rgba(0,0,0,.06);
+  --shadow-md:0 4px 6px -1px rgba(0,0,0,.1), 0 2px 4px -1px rgba(0,0,0,.06);
+  --shadow-lg:0 10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -2px rgba(0,0,0,.05);
+  --border-radius:12px; --border-radius-lg:16px;
+  --transition:all .3s cubic-bezier(.4,0,.2,1);
+
+  /* ขนาดรูป thumbnail */
+  --thumb-size: 220px;
+}
+
+*{margin:0; padding:0; box-sizing:border-box; font-family:'Kanit',sans-serif;}
+body{
+  font-family:'Kanit',sans-serif; background:linear-gradient(135deg,var(--light-bg),var(--gray-100));
+  min-height:100vh; color:var(--gray-800); line-height:1.6; padding:0 1rem 2rem 1rem;
+}
+.container{max-width:1000px; margin:0 auto; padding: 1rem; margin-top: 4rem;} /* เพิ่ม margin-top เพื่อให้ห่างจากปุ่ม fixed */
+
+/* Back Button */
+.btn-back{
+  display:inline-flex; align-items:center; gap:.5rem; font-weight:600; color:var(--gray-600);
+  text-decoration:none; margin-bottom:2rem; padding:.75rem 1rem; border-radius:var(--border-radius);
+  transition:var(--transition); background:var(--white); border:1px solid var(--gray-200); box-shadow:var(--shadow-sm);
+}
+.btn-back:hover{color:var(--primary-color); background:#fff; transform:translateX(-4px); box-shadow:var(--shadow);}
+
+/* Fixed Back Button - ติดมุมบนซ้าย */
+.btn-back-fixed{
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1000;
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  font-weight: 600;
+  color: var(--gray-600);
+  text-decoration: none;
+  padding: .75rem 1rem;
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  box-shadow: var(--shadow-md);
+  font-family: 'Kanit', sans-serif;
+}
+.btn-back-fixed:hover{
+  color: var(--primary-color);
+  background: #fff;
+  transform: translateX(-4px);
+  box-shadow: var(--shadow-lg);
+  text-decoration: none;
+}
+
+/* Loading */
+.loading{
+  text-align:center; padding:4rem 2rem; color:var(--gray-600); font-size:1.1rem; background:var(--white);
+  border-radius:var(--border-radius-lg); box-shadow:var(--shadow); border:1px solid var(--gray-200); position:relative; overflow:hidden;
+}
+.loading::before{
+  content:''; position:absolute; top:0; left:-100%; width:100%; height:4px;
+  background:linear-gradient(90deg,var(--primary-color),var(--accent-color)); animation:loading 1.5s infinite;
+}
+@keyframes loading{0%{left:-100%}100%{left:100%}}
+
+/* Card */
+.detail-card{
+  background:var(--white); border-radius:var(--border-radius-lg); box-shadow:var(--shadow-lg);
+  overflow:hidden; margin-bottom:2rem; border:1px solid var(--gray-200); position:relative;
+}
+.detail-card::before{
+  content:''; position:absolute; top:0; left:0; right:0; height:4px;
+  background:linear-gradient(90deg,var(--primary-color),var(--accent-color));
+}
+
+/* Header */
+.card-header{
+  background:linear-gradient(135deg,var(--gray-800),var(--gray-700));
+  color:var(--white); padding:2rem; font-weight:700; font-size:1.5rem; position:relative;
+
+  /* export layout */
+  display:flex; align-items:center; justify-content:space-between;
+}
+#headerTitle{display:inline-flex; align-items:center; gap:.55rem;}
+.header-actions{display:flex; align-items:center; gap:.75rem;}
+.icon-btn{
+  appearance:none; border:none; background:transparent; color:var(--white); cursor:pointer;
+  padding:0; line-height:1; font-size:1.15rem; display:inline-flex; align-items:center; justify-content:center;
+  transition:transform .18s ease, filter .18s ease; border-radius:8px;
+}
+.icon-btn:hover{transform:scale(1.12); filter:drop-shadow(0 1px 2px rgba(0,0,0,.25));}
+.icon-btn:active{transform:scale(1.05);}
+.icon-btn:focus-visible{outline:2px solid rgba(255,255,255,.9); outline-offset:2px;}
+
+.btn-edit{
+  background: linear-gradient(135deg, var(--danger-color), #ff5252);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: .45rem .75rem;
+  font-family: 'Kanit', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .15s ease;
+  font-size: 0.9rem;
+}
+.btn-edit:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 2px 10px rgba(239, 68, 68, 0.3);
+  background: #dc2626;
+}
+
+.card-body{padding:2rem;}
+
+/* Info row */
+.info-item{
+  padding:1rem 0; border-bottom:1px solid var(--gray-200); display:grid; grid-template-columns:1fr 2fr;
+  gap:1rem; align-items:center; transition:var(--transition);
+}
+.info-item:hover{background:var(--gray-50); margin:0 -2rem; padding:1rem 2rem; border-radius:var(--border-radius);}
+.info-item:last-child{border-bottom:none;}
+.info-label{font-weight:600; color:var(--gray-700); font-size:1rem;}
+.info-value{
+  color:var(--gray-900); font-weight:500; font-size:1rem;
+  background:linear-gradient(135deg,rgba(255,140,66,.1),rgba(253,247,240,.8));
+  padding:.5rem 1rem; border-radius:var(--border-radius); border:1px solid var(--gray-200);
+}
+
+/* ฟิลด์ที่ล็อคให้มีสีทึบขึ้น */
+.locked-field .info-value{
+  background: #e9ecef;
+  color: #606060;
+  cursor: not-allowed;
+}
+
+/* แบ่งโซนเหมือน fieldset/legend */
+.detail-section{
+  border:2px solid var(--gray-200); border-radius:var(--border-radius);
+  background:linear-gradient(135deg,rgba(34,197,94,.025),rgba(249,250,251,.85));
+  margin:1.25rem 0 1.5rem; box-shadow:var(--shadow-sm); overflow:hidden;
+}
+.section-title{
+  display:inline-block; margin:.9rem 1rem 0; padding:.5rem 1rem; font-weight:700;
+  color:var(--primary-color); background:var(--white); border:2px solid var(--primary-color);
+  border-radius:var(--border-radius); font-size:1.05rem;
+}
+.section-body{padding:1rem 1.25rem 1.25rem;}
+.detail-section .info-item{margin:0; padding:.8rem 0;}
+.detail-section .info-item:hover{margin:0 -1.25rem; padding:.8rem 1.25rem;}
+
+.detail-section.images{padding-top:.5rem;}
+.detail-section.images .section-body{padding-top:.25rem;}
+
+/* Images: square centered thumbnails */
+.images-section{
+  text-align:center;
+  width:100%;
+  display:flex;
+  justify-content:center;
+}
+.images-grid{
+  display:flex;
+  flex-wrap:wrap;
+  gap:1rem; 
+  justify-content:center;
+  align-items:flex-start; 
+  margin:1rem auto 0;
+  width:100%;
+  max-width:900px;
+}
+.image-item{
+  position: relative;
+  width:var(--thumb-size); 
+  height:var(--thumb-size);
+  flex-shrink:0;
+  border-radius:var(--border-radius); 
+  overflow:hidden;
+  border:1px solid var(--gray-200); 
+  box-shadow:var(--shadow); 
+  background:#fff;
+  display:block;
+  visibility:visible;
+}
+.image-item img{width:100%; height:100%; object-fit:cover; object-position:center; cursor:pointer; transition:transform .2s ease;}
+.image-item img:hover{transform:scale(1.03);}
+
+/* ปุ่มลบรูปในโหมดแก้ไข */
+.image-delete-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  background: rgba(220, 53, 69, 0.9);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 14px;
+  font-weight: bold;
+  font-family: Arial, sans-serif;
+  cursor: pointer;
+  display: none;
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.image-delete-btn::before {
+  content: '×';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 16px;
+  line-height: 1;
+}
+
+.image-delete-btn:hover {
+  background: rgba(220, 53, 69, 1);
+  transform: scale(1.1);
+}
+
+.image-item:hover .image-delete-btn {
+  display: flex;
+}
+
+.image-item:hover img {
+  opacity: 0.8;
+}
+.no-images{
+  text-align:center; color:var(--gray-500); padding:2rem 1rem; font-style:italic; font-size:1.05rem;
+  background:var(--gray-100); border-radius:var(--border-radius); border:2px dashed var(--gray-300);
+}
+
+/* เพิ่มรูปในโหมดแก้ไข */
+.add-images{margin-top:1.25rem; padding-top:1rem; border-top:1px dashed var(--gray-300);}
+.add-images-header{display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;}
+.add-images-title{font-weight:600; color:var(--gray-700);}
+.btn-add-file{
+  padding:.5rem 1rem; background:var(--primary-color); color:#fff; border:none;
+  border-radius:var(--border-radius); font-family:'Kanit',sans-serif; font-weight:600; cursor:pointer; transition:var(--transition);
+}
+.btn-add-file:hover{background:var(--primary-dark); transform:translateY(-1px);}
+
+.file-inputs-container{margin-bottom:1rem;}
+.no-files-message{
+  text-align:center; color:var(--gray-500); padding:1.5rem 1rem; font-style:italic; 
+  background:var(--gray-100); border-radius:var(--border-radius); border:2px dashed var(--gray-300);
+}
+.file-row{display:flex; gap:.75rem; align-items:center; margin-bottom:.75rem;}
+.file-row input[type="file"]{
+  flex:1; padding:.75rem 1rem; border:1.8px solid var(--gray-200);
+  border-radius:var(--border-radius); background:#fff;
+}
+.remove-btn{
+  padding:.5rem .75rem; background:var(--danger-color); color:#fff; border:none;
+  border-radius:var(--border-radius); font-family:'Kanit',sans-serif; font-weight:600; cursor:pointer; transition:var(--transition);
+}
+.remove-btn:hover{background:#dc2626; transform:translateY(-1px);}
+
+.add-images-label{display:block; font-weight:600; color:var(--gray-700); margin-bottom:.75rem;}
+.add-images input[type="file"]{
+  display:block; width:100%; padding:.75rem 1rem; border:1.8px solid var(--gray-200);
+  border-radius:var(--border-radius); background:#fff;
+}
+.add-images .hint{display:block; margin-top:.5rem; color:var(--gray-500);}
+
+/* Edit Controls */
+.edit-controls[hidden]{display:none !important;}
+.edit-controls{
+  display:flex; gap:.75rem; padding:1rem 1.5rem 1.5rem; border-top:1px solid var(--gray-200); background:var(--gray-100);
+}
+.btn-confirm,.btn-secondary{
+  appearance:none; border:1px solid transparent; border-radius:var(--border-radius);
+  padding:0.9rem 2rem; font-weight:600; font-family:'Kanit',sans-serif; cursor:pointer; 
+  transition:var(--transition); box-shadow:var(--shadow-md);
+  text-transform: uppercase; letter-spacing: 0.5px; display: inline-block; margin-top: 10px;
+}
+.btn-confirm{background:linear-gradient(135deg,var(--primary-color),var(--primary-dark)); color:#fff;}
+.btn-confirm:hover{transform:translateY(-2px); box-shadow:var(--shadow-lg);}
+.btn-confirm:active{transform:translateY(0);}
+.btn-secondary{background:var(--gray-400); color:white; border-color:var(--gray-400);}
+.btn-secondary:hover{transform:translateY(-2px); box-shadow:var(--shadow-lg); background:var(--gray-500); border-color:var(--gray-500);}
+
+/* Inputs while editing */
+.info-input input, .info-input select, .info-input textarea{
+  width:100%; padding:.75rem 1rem; border:1.8px solid var(--gray-200); border-radius:var(--border-radius);
+  background:#fffaf4; transition:var(--transition); color:var(--gray-900);
+}
+
+/* ซ่อนลูกศรของ input number */
+.info-input input[type="number"]::-webkit-outer-spin-button,
+.info-input input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.info-input input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.info-input select{
+  padding-right: 2.5rem;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 0.5rem center;
+  background-repeat: no-repeat;
+  background-size: 1rem;
+  appearance: none;
+}
+
+.info-input input:focus, .info-input select:focus, .info-input textarea:focus{
+  outline:none; border-color:var(--primary-color); box-shadow:0 0 0 3px rgba(34,197,94,.12);
+}
+
+/* ฟิลด์ที่ล็อคในโหมดแก้ไข */
+.locked-field .info-input input,
+.locked-field .info-input select,
+.locked-field .info-input textarea {
+  background: #e9ecef !important;
+  color: #606060 !important;
+  cursor: not-allowed !important;
+  border-color: #ced4da !important;
+}
+
+.locked-field .info-input input:focus,
+.locked-field .info-input select:focus,
+.locked-field .info-input textarea:focus {
+  box-shadow: none !important;
+  border-color: #ced4da !important;
+}
+
+/* Portable soil metrics table (2 x 4) */
+.kv-table{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem;}
+.kv-cell{
+  background:#fff; border:1px solid var(--gray-200); border-radius:var(--border-radius);
+  box-shadow:var(--shadow-sm); padding:.9rem 1rem;
+}
+.kv-label{display:block; font-weight:700; color:var(--gray-700); margin-bottom:.35rem;}
+.kv-value{
+  display:block; font-weight:600; color:var(--gray-900);
+  background:linear-gradient(135deg,rgba(255,140,66,.06),rgba(253,247,240,.65));
+  border:1px solid var(--gray-200); border-radius:10px; padding:.55rem .8rem;
+}
+.kv-cell input{
+  width:100%; padding:.65rem .85rem; border:1.8px solid var(--gray-200);
+  border-radius:var(--border-radius); background:#fffaf4; color:var(--gray-900); transition:var(--transition);
+}
+.kv-cell input:focus{outline:none; border-color:var(--primary-color); box-shadow:0 0 0 3px rgba(34,197,94,.12);}
+
+/* Delete section */
+.delete-section{
+  text-align:center; margin-top:2rem; padding:2rem; background:#fff; border-radius:var(--border-radius-lg);
+  box-shadow:var(--shadow); border:1px solid var(--gray-200); border-top:3px solid var(--danger-color);
+}
+.btn-delete{
+  background: var(--danger-color); color:#fff; border:none;
+  padding:1rem 2rem; border-radius:var(--border-radius); font-size:1.1rem; font-weight:600; 
+  font-family:'Kanit',sans-serif; cursor:pointer;
+  transition:var(--transition); box-shadow:var(--shadow-md); text-transform:uppercase; letter-spacing:.5px;
+}
+.btn-delete:hover{transform:translateY(-2px); box-shadow:var(--shadow-lg); background: #dc2626;}
+.btn-delete:active{transform:translateY(0);}
+.btn-delete:disabled{opacity:.6; cursor:not-allowed; transform:none;}
+
+/* Export dropdown (ขวาหัวข้อ) */
+.export-wrap { position: relative; }
+.btn-export{
+  background: #5797fe;
+  color: #fff;
+  border: 1px solid #2563eb;
+  border-radius: 10px;
+  padding: .45rem .75rem;
+  font-family: 'Kanit', sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.btn-export:hover{ 
+  transform: translateY(-1px); 
+  box-shadow: 0 2px 10px rgba(59, 130, 246, 0.3);
+  background: #2563eb;
+}
+.export-menu{
+  position: absolute; right: 0; top: calc(100% + 6px);
+  background: #fff; border: 1px solid var(--gray-200);
+  border-radius: 10px; box-shadow: var(--shadow-lg);
+  padding: .35rem; min-width: 180px; z-index: 10;
+}
+.export-menu button{
+  width: 100%; text-align: left; background: transparent; border: none;
+  padding: .6rem .7rem; border-radius: 8px; cursor: pointer; color: var(--gray-800);
+  font-family: 'Kanit', sans-serif;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+.export-menu button:hover{ background: var(--gray-100); }
+
+/* Responsive */
+@media (max-width:768px){
+  body{padding:1rem .5rem;}
+  .container{padding:0 .5rem;}
+  .card-header{padding:1.5rem; font-size:1.25rem; flex-direction:row; align-items:center; justify-content:space-between; gap:.75rem;}
+  
+  /* ลดขนาดปุ่มในหน้าจอเล็ก */
+  .btn-edit, .btn-export {
+    padding: .35rem .6rem;
+    font-size: 0.8rem;
+  }
+  
+  .card-body{padding:1.5rem;}
+  .info-item{grid-template-columns:1fr; gap:.5rem; text-align:left;}
+  .info-item:hover{margin:0 -1.5rem; padding:1rem 1.5rem;}
+  .images-grid{
+    justify-content:center;
+    gap:1rem;
+    margin:1rem auto 0;
+  }
+  .image-item{
+    width:calc(50% - 0.5rem);
+    height:calc(50% - 0.5rem);
+    max-width:180px;
+    max-height:180px;
+  }
+  .edit-controls{flex-direction:column;}
+  .btn-confirm,.btn-secondary{width:100%;}
+  .kv-table{grid-template-columns:1fr;}
+  
+  /* เรียงลำดับใหม่ใน responsive mode: N P K EC pH OM Moisture Temp */
+  .kv-cell[data-order="1"] { order: 1; }
+  .kv-cell[data-order="2"] { order: 2; }
+  .kv-cell[data-order="3"] { order: 3; }
+  .kv-cell[data-order="4"] { order: 4; }
+  .kv-cell[data-order="5"] { order: 5; }
+  .kv-cell[data-order="6"] { order: 6; }
+  .kv-cell[data-order="7"] { order: 7; }
+  .kv-cell[data-order="8"] { order: 8; }
+  
+  .export-wrap{align-self:flex-end;}
+}
+
+/* Responsive สำหรับปุ่มแผนที่ */
+@media (max-width: 600px) {
+  .map-controls {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .btn-confirm,
+  .btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  /* รูปภาพแสดงแถวละ 2 รูปในหน้าจอขนาดกลาง */
+  .images-grid{
+    justify-content:center;
+    gap:1rem;
+    margin:1rem auto 0;
+  }
+  .image-item{
+    width:calc(50% - 0.5rem);
+    height:calc(50% - 0.5rem);
+    max-width:150px;
+    max-height:150px;
+  }
+}
+
+@media (max-width:480px){
+  .card-header{padding:1rem; font-size:1.125rem;}
+  .card-body{padding:1rem;}
+  :root{--thumb-size:160px;}
+  
+  /* รูปภาพแสดงแถวละ 1 รูปในมือถือ */
+  .images-grid{
+    justify-content:center;
+    gap:1rem;
+    margin:1rem auto 0;
+  }
+  .image-item{
+    width:100%;
+    height:auto;
+    max-width:200px;
+    aspect-ratio:1/1;
+  }
+  
+  /* ปรับแต่งสำหรับการเพิ่มไฟล์ในมือถือ */
+  .add-images-header{flex-direction:column; gap:.75rem; align-items:stretch;}
+  .file-row{flex-direction:column; gap:.5rem;}
+  .file-row input[type="file"]{margin-bottom:.5rem;}
+}
+
+/* ปุ่มเลือกจากแผนที่ ที่ฟิลด์ GPS (โหมดแก้ไข) */
+.gps-input-group { display:flex; gap:.75rem; align-items:center; }
+.gps-input-group input { flex:1; }
+#mapBtn {
+  padding:.7rem 1rem; background:var(--primary-color); color:#fff; border:none;
+  border-radius:var(--border-radius); font-family:'Kanit',sans-serif; font-weight:600; cursor:pointer; transition:var(--transition);
+}
+#mapBtn:hover { background:var(--primary-dark); transform:translateY(-2px); }
+
+/* Modal แผนที่ */
+.modal {
+  display:none; position:fixed; z-index:2000; inset:0; background:rgba(0,0,0,.55);
+}
+.modal-content {
+  background:#fff; width:min(900px,92vw); margin:5% auto; padding:20px;
+  border:1px solid var(--gray-200); border-radius:var(--border-radius-lg); box-shadow:var(--shadow-lg);
+  position:relative;
+}
+.close-btn {
+  position:absolute; right:14px; top:8px; font-size:32px; color:#999; 
+  font-family:'Kanit',sans-serif; cursor:pointer;
+}
+.close-btn:hover { color:#000; }
+
+/* Map controls สำหรับปุ่มในแผนที่ */
+.map-controls {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+/* ซ่อนลูกศรใน input number */
+input[type="number"].no-spinner::-webkit-outer-spin-button,
+input[type="number"].no-spinner::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"].no-spinner {
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+/* ซ่อนลูกศรสำหรับทุก input number */
+input[type="number"] {
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* ==== Force images to one-per-row vertically on Detail page ==== */
+.detail-section.images .images-grid {
+  display: flex;
+  flex-direction: column;   /* stack vertically */
+  flex-wrap: nowrap;         /* no wrapping */
+  align-items: center;       /* center each image */
+  gap: 1rem;
+}
+.detail-section.images .image-item {
+  width: 100%;
+  max-width: 780px;          /* clamp content width */
+  height: auto;              /* let height flow with image */
+}
+.detail-section.images .image-item img {
+  width: 100%;
+  height: auto;              /* keep aspect ratio */
+  object-fit: contain;       /* avoid cropping */
+}
+
+/* Always show delete button on images while editing (button exists only in edit mode) */
+.detail-section.images .image-delete-btn {
+  display: flex !important;
+}

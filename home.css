@@ -1,0 +1,372 @@
+/* ---- Import Google Font (Kanit) ---- */
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary-color: #22c55e;
+    --primary-dark: #16a34a;
+    --secondary-color: #a3a3a3;
+    --accent-color: #84cc16;
+    --success-color: #10b981;
+    --danger-color: #ef4444;
+    --warning-color: #f59e0b;
+    --light-bg: #f7f8f4;
+    --white: #ffffff;
+    --gray-100: #f3f4f0;
+    --gray-200: #d4c5a0;
+    --gray-300: #b8a082;
+    --gray-400: #8b7355;
+    --gray-500: #6b5b47;
+    --gray-600: #5a4a37;
+    --gray-700: #4a3929;
+    --gray-800: #3a281c;
+    --gray-900: #2a1810;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    --border-radius: 12px;
+    --border-radius-lg: 16px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Kanit', sans-serif;
+}
+
+body {
+    font-family: 'Kanit', sans-serif;
+    background: linear-gradient(135deg, var(--light-bg) 0%, var(--gray-100) 100%);
+    min-height: 100vh;
+    color: var(--gray-800);
+    line-height: 1.6;
+    padding: 0 1rem 1rem 1rem; /* ไม่มี padding-top เพื่อให้ navbar.css จัดการ */
+}
+
+.container {
+    max-width: 1200px;
+    margin: 2rem auto 0; /* เพิ่ม margin-top 2rem */
+    padding: 0.5rem 1rem 6rem; /* ลด padding-top ให้เท่ากับหน้า index */
+    position: relative;
+}
+
+h1 {
+    text-align: center;
+    color: var(--gray-900);
+    font-weight: 700;
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: 1rem; /* ลด margin-bottom */
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+}
+
+/* ---- Search Bar Styles ---- */
+.search-bar {
+    max-width: 760px;
+    margin: 0 auto 2rem;
+}
+
+.search-inner {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 9999px;
+    padding: 0.5rem 0.75rem;
+    box-shadow: var(--shadow);
+}
+
+.search-icon {
+    font-size: 1.1rem;
+    color: var(--gray-400);
+}
+
+.search-bar input[type="text"] {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    padding: 0.5rem 0.25rem;
+    background: transparent;
+    color: var(--gray-800);
+}
+
+/* ซ่อนปุ่ม X ที่เบราว์เซอร์สร้างขึ้นเองสำหรับ input type="search" */
+.search-bar input[type="search"]::-webkit-search-cancel-button,
+.search-bar input[type="search"]::-webkit-search-decoration,
+.search-bar input[type="search"]::-webkit-search-results-button,
+.search-bar input[type="search"]::-webkit-search-results-decoration {
+    display: none;
+    -webkit-appearance: none;
+}
+
+.search-bar input[type="text"]::-ms-clear,
+.search-bar input[type="text"]::-ms-reveal {
+    display: none;
+    width: 0;
+    height: 0;
+}
+
+.clear-btn {
+    border: none;
+    background: transparent;
+    color: var(--gray-400);
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+    border-radius: 9999px;
+    visibility: hidden; /* shown when input has value via JS */
+    transition: var(--transition);
+}
+
+.clear-btn:hover {
+    color: var(--gray-600);
+    background: var(--gray-100);
+}
+
+/* ---- Data List Styles ---- */
+.data-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .data-list {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+
+.data-item {
+    background: var(--white);
+    border-radius: var(--border-radius-lg);
+    padding: 2rem;
+    cursor: pointer;
+    transition: var(--transition);
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    border: 1px solid var(--gray-200);
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+.data-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+    transform: scaleX(0);
+    transition: var(--transition);
+}
+
+.data-item:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-xl);
+    border-color: var(--primary-color);
+}
+
+.data-item:hover::before {
+    transform: scaleX(1);
+}
+
+.item-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--gray-900);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.item-title::before {
+    content: '📍';
+    font-size: 1.25rem;
+}
+
+.item-subtitle {
+    font-size: 1rem;
+    color: var(--gray-600);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+}
+
+.item-subtitle::before {
+    content: '🏔️';
+    font-size: 1rem;
+}
+
+.item-date {
+    font-size: 0.95rem;
+    color: var(--success-color);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(78, 205, 196, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    width: fit-content;
+    margin-top: 1rem;
+}
+
+.item-date::before {
+    content: '📅';
+    font-size: 0.9rem;
+}
+
+/* ---- Loading, Empty and No Results States ---- */
+.loading, .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: var(--white);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--gray-200);
+    position: relative;
+    overflow: hidden;
+}
+
+.no-results {
+    margin-top: 0.5rem;
+}
+
+.loading {
+    color: var(--gray-600);
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.loading::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+.empty-state {
+    color: var(--gray-500);
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+
+/* ---- Hidden Add Button (removed) ---- */
+.add-btn {
+    display: none;
+}
+
+.plus-icon {
+    display: none;
+}
+
+/* ---- Responsive Design ---- */
+@media (max-width: 768px) {
+    .container {
+        padding: 1.5rem 1rem 5rem;
+    }
+    
+    h1 {
+        margin-bottom: 1rem;
+    }
+
+    .search-bar { margin-bottom: 1.5rem; }
+
+    .data-item {
+        padding: 1.5rem;
+    }
+    
+    .item-title {
+        font-size: 1.25rem;
+    }
+    
+    .add-btn {
+        bottom: 1.5rem;
+        right: 1.5rem;
+        width: 3.5rem;
+        height: 3.5rem;
+    }
+    
+    .plus-icon {
+        font-size: 1.5rem;
+        margin-top: -3px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 1rem 0.75rem 4.5rem;
+    }
+    
+    .data-item {
+        padding: 1.25rem;
+        margin: 0 0.5rem;
+    }
+    
+    .item-title {
+        font-size: 1.125rem;
+    }
+    
+    .item-subtitle, .item-date {
+        font-size: 0.9rem;
+    }
+    
+    .add-btn {
+        bottom: 1rem;
+        right: 1rem;
+        width: 3rem;
+        height: 3rem;
+    }
+    
+    .plus-icon {
+        font-size: 1.25rem;
+        margin-top: -2px;
+    }
+}
+
+/* ---- Tablet Landscape ---- */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    .container {
+        padding: 2rem 2rem 6rem;
+    }
+    
+    .data-list {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ---- Large Desktop ---- */
+@media (min-width: 1200px) {
+    .data-list {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+    
+    .container {
+        padding: 3rem 2rem 6rem;
+    }
+}

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>รายละเอียดข้อมูลการวิเคราะห์ดิน</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="navbar.css"/>
+  <link rel="stylesheet" href="detail.css"/>
+</head>
+<body>
+  <!-- ปุ่มกลับไปดูข้อมูล - Fixed ที่มุมบนซ้าย -->
+  <a href="home.html" class="btn-back-fixed">
+    <span><</span> ดูข้อมูลทั้งหมด
+  </a>
+  
+  <div class="container">
+    <div id="detail-container">
+      <p class="loading">กำลังโหลดข้อมูล...</p>
+    </div>
+
+    <!-- ปุ่มลบข้อมูล -->
+    <div class="delete-section">
+      <button id="deleteBtn" class="btn-delete" style="display:none;">ลบข้อมูลนี้</button>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+
+  <!-- jsPDF + autoTable: ทำรายงาน PDF -->
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.3/dist/jspdf.plugin.autotable.min.js"></script>
+
+  <!-- SheetJS (xlsx) ใช้ช่วยทำ CSV/XLSX ได้ -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <!-- html2canvas สำหรับแปลง DOM -> รูปภาพ (แก้ปัญหาฟอนต์ไทยใน PDF) -->
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<!-- html2pdf.js: รวม html2canvas + jsPDF -->
+<script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
+
+  <script src="navbar.js"></script>
+  <script src="detail.js"></script>
+  <!-- Modal แผนที่ -->
+<div id="mapModal" class="modal" style="display:none">
+  <div class="modal-content">
+    <span class="close-btn">&times;</span>
+    <h4 style="margin:0 0 10px;color:#4a3929">เลือกตำแหน่งจากแผนที่</h4>
+    <div id="map" style="height:500px;border-radius:12px;margin-bottom:10px"></div>
+    <div class="map-controls">
+      <button id="locateMeBtn" class="btn-secondary">📍 ปักหมุดที่ตำแหน่งปัจจุบัน</button>
+      <button id="confirmLocationBtn" class="btn-confirm">ยืนยันตำแหน่ง</button>
+    </div>
+  </div>
+</div>
+
+<!-- Google Maps (ใช้ key เดียวกับหน้า form) -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAPd8UeMjK_euJp_jasQCPFmQQHicmH-c4&callback=initMapDetail&v=weekly" async defer></script>
+
+</body>
+</html>
