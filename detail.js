@@ -30,21 +30,7 @@ function shouldHideFarmerSection(recordDate = null) {
 
 // ฟังก์ชันตรวจสอบวันที่สำหรับการแสดงผลผลิตเมล็ดกาแฟ
 function shouldShowBeanYieldSection(recordDate = null) {
-  // ถ้าไม่ส่งวันที่มา ใช้วันที่ปัจจุบัน (หรือ debug date)
-  let now;
-  if (recordDate) {
-    now = recordDate;
-  } else if (window.__debugDate) {
-    now = new Date(window.__debugDate + 'T00:00:00');
-  } else {
-    now = new Date();
-  }
-  
-  const year = now.getFullYear();
-  const month = now.getMonth() + 1; // 1-12
-  
-  // ตั้งแต่ 1 ธันวาคม 2025 เป็นต้นไป
-  return (year > 2025) || (year === 2025 && month >= 12);
+  return true; // แสดงส่วนผลผลิตเมล็ดกาแฟตลอดเวลา
 }
 
 // ฟังก์ชันตรวจสอบว่าบันทึกนี้ไม่มีข้อมูลทะเบียนเกษตรกรเพราะอยู่ในช่วงที่ไม่บังคับ
